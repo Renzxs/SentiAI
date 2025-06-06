@@ -11,7 +11,6 @@ import { ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { SessionsModule } from './sessions/sessions.module';
 import { MessagesModule } from './messages/messages.module';
-import { AuthModule } from './auth/auth.module';
 import config from '../config';
 
 @Module({
@@ -35,7 +34,6 @@ import config from '../config';
     UsersModule,
     SessionsModule,
     MessagesModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
