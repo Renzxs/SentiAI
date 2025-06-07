@@ -1,4 +1,4 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { MessagesService } from './messages.service';
 import { Message } from './schema/messages.schema';
 import { CreateMessageDto } from './dto/create-message.dto';
@@ -15,9 +15,16 @@ export class MessagesResolver {
     @Mutation(() => Message)
     async createMessage(
         @Context() context: any,
-        @Args('sessionId') sessionId: string,
         @Args('createMessageDto') createMessageDto: CreateMessageDto
     ): Promise<Message> {
-        return this.messagesService.createMessage(sessionId, context.req.user.id, createMessageDto);
+        return this.messagesService.createMessage(context.req.user.id, createMessageDto);
+    }
+
+    @Query(() => [Message], { nullable: true })
+    async getMessages(
+        @Context() context: any,
+        @Args('sessionId') sessionId: string
+    ): Promise<Message[] | null> {
+        return this.messagesService.getMessages(context.req.user.id, sessionId);
     }
 }

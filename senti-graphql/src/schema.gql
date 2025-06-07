@@ -73,11 +73,12 @@ type Query {
   getUser: User
   sessions: [Session!]!
   session(id: String!): Session!
+  getMessages(sessionId: String!): [Message!]
 }
 
 type Mutation {
   createSession(createSessionDto: CreateSessionDto!): Session!
-  createMessage(sessionId: String!, createMessageDto: CreateMessageDto!): Message!
+  createMessage(createMessageDto: CreateMessageDto!): Message!
 }
 
 input CreateSessionDto {
