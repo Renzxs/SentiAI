@@ -26,6 +26,9 @@ export default () => ({
         gptApiKey: process.env.GPT_API_KEY,
         gptModel: process.env.GPT_MODEL || 'omni-moderation-latest',
         deepseekApiKey: process.env.DEEPSEEK_API_KEY,
-        deepseekModel: process.env.DEEPSEEK_MODEL || 'deepseek-chat',
+        deepseekModel: process.env.DEEPSEEK_MODEL || 'accounts/fireworks/models/deepseek-r1-0528',
+        hfApiKey: process.env.HF_API_KEY,
+        ghOpenAiApiKey: process.env.GH_OPENAI_API_KEY,
+        ghOpenAiModel: process.env.GH_OPENAI_MODEL || 'openai/gpt-4.1'
     }
 })

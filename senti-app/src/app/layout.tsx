@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components/ui/provider";
 import { ApolloWrapper } from "@/components/providers/apollo-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bricolageGrotesque = Bricolage_Grotesque({
+  variable: "--font-bricolage-grotesque",
+  weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: "SentiAI",
   description: "Talk to Senti, Feel a Little Lighter (Mental Health companion AI agent)",
+  icons: {
+    icon: "senti-logo.svg"
+  }
 };
 
 export default function RootLayout({
@@ -21,11 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} antialiased`}>
+      <body className={`${bricolageGrotesque.variable}  antialiased`}>
         <ApolloWrapper>
-          <Provider>
-            {children}
-          </Provider>
+            <Provider>
+              {children}
+            </Provider>  
         </ApolloWrapper>
       </body>
     </html>

@@ -5,9 +5,8 @@ import { Message, MessageDocument, MessageRole } from './schema/messages.schema'
 import { CreateMessageDto } from './dto/create-message.dto';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { create } from 'domain';
 import { lastValueFrom } from 'rxjs';
-import { fstat, fsync, readFile } from 'fs';
+import { readFile } from 'fs';
 import { join } from 'path';
 
 @Injectable()
@@ -77,10 +76,12 @@ export class MessagesService {
                 }
             case 'gpt':
                 try {
-                    const gpt = `https://api.openai.com/v1/chat/completions`;
+                    const gpt = `https://models.github.ai/inference/chat/completions`;
                     const gptResponse = await lastValueFrom(
                         this.httpService.post(gpt, {
-                            model: this.configService.get<string>('ai.gptModel'),
+                            model: this.configService.get<string>('ai.ghOpenAiModel'),
+                            temperature: 1,
+                            top_p: 1,
                             messages: [
                                 {
                                     "role": "developer",
@@ -95,7 +96,7 @@ export class MessagesService {
                         {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.configService.get<string>('ai.gptApiKey')}`
+                                'Authorization': `Bearer ${this.configService.get<string>('ai.ghOpenAiApiKey')}`
                             },  
                         })
                     )  
@@ -105,22 +106,30 @@ export class MessagesService {
                 }
             case 'deepseek':
                 try {
-                    const deepseek = `https://api.deepseek.com/chat/completions`;
+                    const deepseek = `https://router.huggingface.co/fireworks-ai/inference/v1/chat/completions`;
                     const deepseekResponse = await lastValueFrom(
                         this.httpService.post(deepseek, {
                             model: this.configService.get<string>('ai.deepseekModel'),
+                            stream: false,
                             messages: [
-                                {"role": "system", "content": instruction},
-                                {"role": "user", "content": content}
+                                {
+                                    "role": "system", 
+                                    "content": instruction
+                                },
+                                {
+                                    "role": "user", 
+                                    "content": content
+                                }
                             ],
                         },
                         {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.configService.get<string>('ai.deepseekApiKey')}`
+                                'Authorization': `Bearer ${this.configService.get<string>('ai.hfApiKey')}`
                             },  
                         })
                     )
+                    console.log(deepseekResponse.data);
                     return deepseekResponse.data.choices[0].message.content;
                 }
                 catch (error) {

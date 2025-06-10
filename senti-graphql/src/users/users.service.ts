@@ -72,7 +72,7 @@ export class UsersService {
             const payload = { id: user.id, email: user.email };
             const accessToken = this.jwtService.sign(payload);
 
-            return { url: `http://localhost:3000/sentiai/auth?token=${accessToken}` };
+            return { url: `http://localhost:3000/auth?token=${accessToken}` };
         }
         catch(error) {
             throw new Error(error.message);
