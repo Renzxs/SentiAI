@@ -16,6 +16,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 type Documents = {
     "\n    mutation CreateSession($createSessionDto: CreateSessionDto!) {\n        createSession(createSessionDto: $createSessionDto) {\n            id\n            title\n            description\n            createdAt\n            updatedAt\n        }\n    }\n": typeof types.CreateSessionDocument,
     "\n    mutation CreateMessage($createMessageDto: CreateMessageDto!) {\n        createMessage(createMessageDto: $createMessageDto) {\n            id\n            content\n            model\n            role\n            isLiked\n            createdAt\n            updatedAt\n        }\n    }\n": typeof types.CreateMessageDocument,
+    "\n    mutation DeleteSession($id: String!) {\n        deleteSession(id: $id) \n    }\n": typeof types.DeleteSessionDocument,
     "\n    query GetUser {\n        getUser {\n            id\n            name\n            email\n            phone\n            avatar\n            createdAt\n            updatedAt\n        }\n    }\n": typeof types.GetUserDocument,
     "\n    query GetGithubAuthUrl {\n        getGithubAuthUrl\n    }\n": typeof types.GetGithubAuthUrlDocument,
     "\n    query GetSessions {\n        sessions {\n            id\n            title\n            description\n            createdAt\n            updatedAt\n        }\n    }\n": typeof types.GetSessionsDocument,
@@ -25,6 +26,7 @@ type Documents = {
 const documents: Documents = {
     "\n    mutation CreateSession($createSessionDto: CreateSessionDto!) {\n        createSession(createSessionDto: $createSessionDto) {\n            id\n            title\n            description\n            createdAt\n            updatedAt\n        }\n    }\n": types.CreateSessionDocument,
     "\n    mutation CreateMessage($createMessageDto: CreateMessageDto!) {\n        createMessage(createMessageDto: $createMessageDto) {\n            id\n            content\n            model\n            role\n            isLiked\n            createdAt\n            updatedAt\n        }\n    }\n": types.CreateMessageDocument,
+    "\n    mutation DeleteSession($id: String!) {\n        deleteSession(id: $id) \n    }\n": types.DeleteSessionDocument,
     "\n    query GetUser {\n        getUser {\n            id\n            name\n            email\n            phone\n            avatar\n            createdAt\n            updatedAt\n        }\n    }\n": types.GetUserDocument,
     "\n    query GetGithubAuthUrl {\n        getGithubAuthUrl\n    }\n": types.GetGithubAuthUrlDocument,
     "\n    query GetSessions {\n        sessions {\n            id\n            title\n            description\n            createdAt\n            updatedAt\n        }\n    }\n": types.GetSessionsDocument,
@@ -54,6 +56,10 @@ export function graphql(source: "\n    mutation CreateSession($createSessionDto:
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation CreateMessage($createMessageDto: CreateMessageDto!) {\n        createMessage(createMessageDto: $createMessageDto) {\n            id\n            content\n            model\n            role\n            isLiked\n            createdAt\n            updatedAt\n        }\n    }\n"): (typeof documents)["\n    mutation CreateMessage($createMessageDto: CreateMessageDto!) {\n        createMessage(createMessageDto: $createMessageDto) {\n            id\n            content\n            model\n            role\n            isLiked\n            createdAt\n            updatedAt\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation DeleteSession($id: String!) {\n        deleteSession(id: $id) \n    }\n"): (typeof documents)["\n    mutation DeleteSession($id: String!) {\n        deleteSession(id: $id) \n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

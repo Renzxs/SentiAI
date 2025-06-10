@@ -78,6 +78,7 @@ type Query {
 
 type Mutation {
   createSession(createSessionDto: CreateSessionDto!): Session!
+  deleteSession(id: String!): Boolean!
   createMessage(createMessageDto: CreateMessageDto!): Message!
 }
 

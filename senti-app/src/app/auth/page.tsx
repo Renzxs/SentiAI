@@ -6,11 +6,12 @@ import { Suspense, useEffect } from "react";
 
 function Auth() {
     const router = useRouter();
-    const route = new URLSearchParams(window.location.search);
 
     useEffect(() => {
         async function signinWithGitHub() {
+            const route = new URLSearchParams(window.location.search);
             const token = route.get('token') as string | undefined;
+            
             if(token) {
                 localStorage.setItem('auth_token', token);
                 router.push('/app');
@@ -21,7 +22,7 @@ function Auth() {
         }
 
         signinWithGitHub();
-    }, [route])
+    }, [router])
 
     return (
         <Container maxW="md" height="100vh" display="flex" alignItems="center" justifyContent="center">

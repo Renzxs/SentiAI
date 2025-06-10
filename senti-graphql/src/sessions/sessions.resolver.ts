@@ -26,7 +26,12 @@ export class SessionsResolver {
     }
 
     @Query(() => Session)
-    async session(@Args('id') id: string): Promise<Session | null> {
-        return this.sessionsService.findSessionById(id);
+    async session(@Context() context: any, @Args('id') id: string): Promise<Session | null> {
+        return this.sessionsService.findSessionById(context.req.user.id, id);
+    }
+
+    @Mutation(() => Boolean)
+    async deleteSession(@Context() context: any, @Args('id') id: string): Promise<boolean> {
+        return this.sessionsService.deleteSession(context.req.user.id, id);
     }
 }

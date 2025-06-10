@@ -3,6 +3,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components/ui/provider";
 import { ApolloWrapper } from "@/components/providers/apollo-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
@@ -29,6 +30,7 @@ export default function RootLayout({
         <ApolloWrapper>
             <Provider>
               {children}
+              <Toaster />
             </Provider>  
         </ApolloWrapper>
       </body>

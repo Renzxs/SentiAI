@@ -25,3 +25,9 @@ export const CREATE_MESSAGE = gql`
         }
     }
 `;
+
+export const DELETE_SESSION = gql`
+    mutation DeleteSession($id: String!) {
+        deleteSession(id: $id) 
+    }
+`;

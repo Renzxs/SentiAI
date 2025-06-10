@@ -13,12 +13,12 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-  const { data, loading, error } = useQuery(GetUserDocument);
+  const { data, loading } = useQuery(GetUserDocument);
   const user = data?.getUser;
 
   useEffect(() => {
     if(!user && !loading) {
-      router.push('/signin');
+      router.push('/');
     }
   }, [user, loading, router])
 
@@ -33,7 +33,7 @@ export default function AppLayout({
   return (
     <Container bg={{ base: "white", _dark: "black" }}>
       <HeaderNav user={user as User} />
-      {children}
+      <Container visibility={user ? "visible" : "hidden"}>{children}</Container>
     </Container>
   )
 }

@@ -24,14 +24,14 @@ export class SessionsService {
         return sessions;
     }
 
-    async findSessionById(id: string): Promise<Session | null> {
-        const session = await this.sessionModel.findOne({ id });
+    async findSessionById(userId: string, id: string): Promise<Session | null> {
+        const session = await this.sessionModel.findOne({ id, userId });
         return session;
     }
 
-    async deleteSession(id: string): Promise<Session | null> {
-        const session = await this.sessionModel.findOneAndDelete({ id });
-        return session;
+    async deleteSession(userId: string, id: string): Promise<boolean> {
+        const session = await this.sessionModel.findOneAndDelete({ id, userId });
+        return !!session;
     }
 }
 
