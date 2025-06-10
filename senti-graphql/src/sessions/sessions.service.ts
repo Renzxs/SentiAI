@@ -3,11 +3,13 @@ import { Session, SessionDocument } from './schema/sessions.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateSessionDto } from './dto/create-session.dto';
+import { Message } from '../messages/schema/messages.schema';
 
 @Injectable()
 export class SessionsService {
     constructor(
         @InjectModel(Session.name) private sessionModel: Model<SessionDocument>,
+        @InjectModel(Message.name) private messageModel: Model<Message>,
     ) {}
 
     async createSession(userId: string, createSessionDto: CreateSessionDto): Promise<SessionDocument> {
@@ -30,6 +32,9 @@ export class SessionsService {
     }
 
     async deleteSession(userId: string, id: string): Promise<boolean> {
+        // Delete all messages associated with this session
+        await this.messageModel.deleteMany({ sessionId: id, userId });
+        // Delete the session
         const session = await this.sessionModel.findOneAndDelete({ id, userId });
         return !!session;
     }

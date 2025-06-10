@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CreateSessionDocument, GetSessionsDocument } from "@/gql/graphql";
 import { toaster } from "../ui/toaster";
+import { useRouter } from "next/navigation";
 
 export default function CreateChatModal() {
+  const router = useRouter();
   const [topic, setTopic] = useState<string>("");
   const [createSession, { loading }] = useMutation(CreateSessionDocument)
   
@@ -16,11 +18,17 @@ export default function CreateChatModal() {
           title: topic,
         }
       },
-      onCompleted: () => {
+      onCompleted: ({ createSession }) => {
         toaster.success({
           title: "Chat created successfully",
           description: "You can now start chatting with Senti",
         });
+        router.push(`/app/c/${createSession.id}`);
+        // Close the dialog
+        const closeButton = document.querySelector('[data-dialog-close]');
+        if (closeButton instanceof HTMLElement) {
+          closeButton.click();
+        }
       },
       onError: () => {
         toaster.error({
@@ -59,7 +67,7 @@ export default function CreateChatModal() {
                 <Button colorPalette="teal" variant="solid" disabled={topic.length === 0} onClick={handleCreateChat} loading={loading}>Create chat</Button>
             </Dialog.Footer>
             <Dialog.CloseTrigger asChild>
-              <CloseButton size="sm" />
+              <CloseButton size="sm" data-dialog-close />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>

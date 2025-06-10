@@ -22,7 +22,7 @@ export default function DrawerNav() {
             <Skeleton w="100%" h="100%" />
         )
     }
-
+    
     const handleDeleteSession = (id: string) => {
         toaster.info({
             title: "Are you sure you want to delete this session?",
@@ -37,6 +37,7 @@ export default function DrawerNav() {
                                 title: "Session deleted successfully",
                                 description: "The session has been deleted",
                             });
+                            router.push('/app');
                         },
                         onError: () => {
                             toaster.error({
@@ -113,7 +114,7 @@ export default function DrawerNav() {
                                             </Button>
                                         </HStack>
                                     </HStack>                                    
-                                ))}
+                                )).reverse()}
 
                             </VStack>
                         </Drawer.Body>

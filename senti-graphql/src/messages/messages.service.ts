@@ -74,7 +74,7 @@ export class MessagesService {
                 } catch (error) {
                     throw new Error(`Error in Gemini API ${error}`);
                 }
-            case 'gpt':
+            case 'chatgpt':
                 try {
                     const gpt = `https://models.github.ai/inference/chat/completions`;
                     const gptResponse = await lastValueFrom(
