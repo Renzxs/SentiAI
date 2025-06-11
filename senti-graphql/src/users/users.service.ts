@@ -24,7 +24,7 @@ export class UsersService {
 
     async handleGithubAuthCallback(code: string): Promise<{ url: string }> { 
         if(!code) {
-            throw new UnauthorizedException('Code not provided');
+            return { url: `http://localhost:3000/` };
         }
 
         try {
@@ -60,7 +60,6 @@ export class UsersService {
 
             const githubUser = userResponse.data;
             let user = await this.findByEmail(emailReponse.data[0].email);
-            console.log(user);
             if(!user) {
                 user = await this.createUser({
                     name: githubUser.name,

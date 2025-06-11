@@ -1,6 +1,6 @@
 import { Box, Button, HStack, Portal, Select, Textarea } from "@chakra-ui/react"
 import { createListCollection } from "@chakra-ui/react";
-import { BiSend } from "react-icons/bi";
+import { BiExit, BiSend, BiX } from "react-icons/bi";
 
 export default function ChatInputBox(props: {
     message: string;
@@ -54,10 +54,19 @@ export default function ChatInputBox(props: {
                 </Select.Positioner>
               </Portal>
             </Select.Root>
-
-            <Button variant="ghost" border="none" outline="none" size="md" colorPalette="green" onClick={onSend}>
-              <BiSend />
-            </Button>
+            
+            <HStack gap={2}>
+              {
+                message.length > 0 && (
+                  <Button variant="ghost" border="none" outline="none" size="md" colorPalette="red" onClick={() => setMessage("")} >
+                    <BiX />
+                  </Button>
+                )
+              }
+              <Button variant="ghost" border="none" outline="none" size="md" colorPalette="green" onClick={onSend} disabled={message.length === 0}>
+                <BiSend />
+              </Button>
+            </HStack>
           </HStack>
         </Box>        
     )
