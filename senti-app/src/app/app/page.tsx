@@ -60,7 +60,7 @@ export default function AppPage() {
   if(loading || createSessionLoading || createMessageLoading) {
     return (
       <Container w="100%" height="100vh" display="flex" alignItems="center" justifyContent="center">
-        <Spinner />
+        <Spinner color="green.300" />
       </Container>
     )
   }

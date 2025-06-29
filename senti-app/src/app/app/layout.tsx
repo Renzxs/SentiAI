@@ -31,9 +31,12 @@ export default function AppLayout({
   }
 
   return (
-    <Container bg={{ base: "white", _dark: "black" }}>
-      <HeaderNav user={user as User} />
-      <Container visibility={user ? "visible" : "hidden"}>{children}</Container>
-    </Container>
+    <>
+      <link rel="icon" href="/senti-logo.svg" />
+      <Container bg={{ base: "white", _dark: "black" }}>
+        <HeaderNav user={user as User} />
+        <Container visibility={user ? "visible" : "hidden"}>{children}</Container>
+      </Container>
+    </>
   )
 }

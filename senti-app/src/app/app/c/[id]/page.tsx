@@ -93,7 +93,7 @@ export default function ChatPage() {
                                 <Card.Root maxW="90%" p={2} borderRadius="md" variant={"subtle"} style={{ backgroundColor: message.role === "USER" as MessageRole ? "gray.900" : "transparent" }} w="fit-content" alignSelf={message.role === "USER" as MessageRole ? "flex-end" : "flex-start"} _dark={{ bg: "gray.900" }}>
                                     <Text fontSize="sm" textAlign={message.role === "USER" as MessageRole ? "right" : "left"}>{message.content}</Text>
                                 </Card.Root>           
-                                <Text fontSize="smaller" color="gray.500" textAlign={message.role === "USER" as MessageRole ? "right" : "left"}>{moment(message.createdAt).format("DD/MM/YYYY HH:mm")}</Text>
+                                <Text fontSize="smaller" color="gray.500" textAlign={message.role === "USER" as MessageRole ? "right" : "left"}>{moment(message.createdAt).format("lll")}</Text>
                             </Box>
                         ))
                     )
