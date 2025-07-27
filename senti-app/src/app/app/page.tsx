@@ -10,6 +10,17 @@ import ChatInputBox from "@/components/chat-input-box";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toaster } from "@/components/ui/toaster";
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const messageVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function AppPage() {
   const { data, loading } = useQuery(GetUserDocument);
@@ -35,6 +46,7 @@ export default function AppPage() {
         }
       },
       onCompleted: ({ createSession }) => {
+        console.log(createSession);
         router.push(`/app/c/${createSession.id}`);
         createMessage({
           variables: {
@@ -68,13 +80,29 @@ export default function AppPage() {
   return (
     <Container w="100%" h="100vh" display="flex" justifyContent="center" alignItems="center" bg={{ base: "white", _dark: "black" }}> 
       <Box w="100%" h="100%" display="flex" flexDirection="column" gap={4} justifyContent="center" alignItems="center">
-        <HStack px={4} py={2} bg="gray.800" borderRadius="full" gap={4}>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5 }}
+        >
+          <HStack px={4} py={2} bg="gray.800" borderRadius="full" gap={4}>
             <Text fontWeight="medium" color="white">Grab a coffee and talk to Senti</Text>
-        </HStack>
+          </HStack>
+        </motion.div>
+        
         <HStack gap={4}>
           <Image src={SentiLogo.src} alt="SentiAI" width={50} height={50} />
-          <Text fontSize="4xl" fontWeight="medium">Hello, {user?.name}</Text>
+          <motion.div
+            variants={messageVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 0.5 }}
+          >
+            <Text fontSize="4xl" fontWeight="medium">Hello, {user?.name}</Text>
+          </motion.div>
         </HStack>
+
         <ChatInputBox 
           message={message}
           setMessage={setMessage}
@@ -82,6 +110,7 @@ export default function AppPage() {
           setModelsValue={setModel}
           onSend={handleCreateChat}
         />
+
         <Box display="flex" justifyContent="center" alignItems="center" w="100%">
           <Text fontSize="xs" color="gray.500">Developed by DevChiefs 2025</Text>
         </Box>
