@@ -8,14 +8,22 @@ import { ConfigService } from '@nestjs/config';
 import { lastValueFrom } from 'rxjs';
 import { readFile } from 'fs';
 import { join } from 'path';
+import OpenAI from 'openai';
 
 @Injectable()
 export class MessagesService {
+    private client: OpenAI;
+
     constructor(
         @InjectModel(Message.name) private messageModel: Model<MessageDocument>,
         private readonly httpService: HttpService,
         private readonly configService: ConfigService,
-    ) {}
+    ) {
+        this.client = new OpenAI({
+            apiKey: this.configService.get<string>('ai.ghOpenAiApiKey'),
+            baseURL: "https://models.github.ai/inference",
+        });
+    }
 
     async createMessage(
         userId: string, 
@@ -45,95 +53,24 @@ export class MessagesService {
         return messages;
     }
 
-    async handleAgentResponse(content: string, model: string): Promise<string> {
+    async handleAgentResponse(content: string, model: string): Promise<string | null> {
         const instruction = await this.getInstruction();
         switch(model) {
-            case 'gemini':
-                try {
-                    const gemini = `https://generativelanguage.googleapis.com/v1beta/models/${this.configService.get<string>('ai.geminiModel')}:generateContent?key=${this.configService.get<string>('ai.geminiApiKey')}`;
-                    const geminiResponse = await lastValueFrom(
-                        this.httpService.post(gemini, {
-                            contents: [{
-                                parts: [{
-                                    text: content
-                                }]
-                            }],
-                            systemInstruction: {
-                                parts: [{
-                                    text: instruction
-                                }]
-                            }
-                        },
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                        })
-                    )
-                    return geminiResponse.data.candidates[0].content.parts[0].text;
-                } catch (error) {
-                    throw new Error(`Error in Gemini API ${error}`);
-                }
             case 'chatgpt':
                 try {
-                    const gpt = `https://models.github.ai/inference/chat/completions`;
-                    const gptResponse = await lastValueFrom(
-                        this.httpService.post(gpt, {
-                            model: this.configService.get<string>('ai.ghOpenAiModel'),
-                            temperature: 1,
-                            top_p: 1,
-                            messages: [
-                                {
-                                    "role": "developer",
-                                    "content": instruction
-                                },
-                                { 
-                                    role: 'user', 
-                                    content: content 
-                                },
-                            ],
-                        },
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.configService.get<string>('ai.ghOpenAiApiKey')}`
-                            },  
-                        })
-                    )  
-                    return gptResponse.data.choices[0].message.content;
+                    const response = await this.client.chat.completions.create({
+                        messages: [
+                            { role:"system", "content": instruction },
+                            { role:"user", content: content }
+                        ],
+                        model: 'openai/gpt-4.1',
+                        temperature: 1,
+                        top_p: 1,
+                    });
+
+                    return response.choices[0].message.content;
                 } catch (error) {
                     throw new Error(`Error in ChatGPT API ${error}`);
-                }
-            case 'deepseek':
-                try {
-                    const deepseek = `https://router.huggingface.co/fireworks-ai/inference/v1/chat/completions`;
-                    const deepseekResponse = await lastValueFrom(
-                        this.httpService.post(deepseek, {
-                            model: this.configService.get<string>('ai.deepseekModel'),
-                            stream: false,
-                            messages: [
-                                {
-                                    "role": "system", 
-                                    "content": instruction
-                                },
-                                {
-                                    "role": "user", 
-                                    "content": content
-                                }
-                            ],
-                        },
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.configService.get<string>('ai.hfApiKey')}`
-                            },  
-                        })
-                    )
-                    console.log(deepseekResponse.data);
-                    return deepseekResponse.data.choices[0].message.content;
-                }
-                catch (error) {
-                    throw new Error(`Error in DeepSeek API ${error}`);
                 }
             default:
                 throw new Error('Invalid model');
