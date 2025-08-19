@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import ChatInputBox from "@/components/chat-input-box";
-import { CreateMessageDocument, GetMessagesDocument, MessageRole } from "@/gql/graphql";
+import { CreateMessageDocument, GetMessagesDocument } from "@/gql/graphql";
 import {
   Box,
   Card,
@@ -31,8 +31,9 @@ export default function ChatPage() {
 
   const [message, setMessage] = useState<string>("");
   const [model, setModel] = useState<string[]>(["chatgpt"]);
-  const [sendMessage, { loading: sendMessageLoading }] =
-    useMutation(CreateMessageDocument);
+  const [sendMessage, { loading: sendMessageLoading }] = useMutation(
+    CreateMessageDocument
+  );
 
   const handleSendMessage = () => {
     if (message.trim() === "" || model[0] === "") return;
@@ -79,7 +80,15 @@ export default function ChatPage() {
   }
 
   const displayedMessages = sendMessageLoading
-    ? [...(messages ?? []), { id: "sending", role: "USER", content: message, createdAt: new Date().toISOString() }]
+    ? [
+        ...(messages ?? []),
+        {
+          id: "sending",
+          role: "USER",
+          content: message,
+          createdAt: new Date().toISOString(),
+        },
+      ]
     : messages ?? [];
 
   return (
@@ -133,9 +142,7 @@ export default function ChatPage() {
                 >
                   <Text
                     fontSize="sm"
-                    textAlign={
-                      message.role === "USER" ? "right" : "left"
-                    }
+                    textAlign={message.role === "USER" ? "right" : "left"}
                   >
                     {message.content}
                   </Text>
@@ -144,9 +151,7 @@ export default function ChatPage() {
                   <Text
                     fontSize="smaller"
                     color="gray.500"
-                    textAlign={
-                      message.role === "USER" ? "right" : "left"
-                    }
+                    textAlign={message.role === "USER" ? "right" : "left"}
                   >
                     {moment(message.createdAt).format("lll")}
                   </Text>
