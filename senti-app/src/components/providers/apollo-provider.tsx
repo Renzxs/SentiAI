@@ -1,22 +1,21 @@
-'use client'
+"use client";
 
 import { ApolloProvider } from "@apollo/client";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
-import { setContext } from '@apollo/client/link/context';
+import { setContext } from "@apollo/client/link/context";
 
 export function ApolloWrapper({ children }: { children: React.ReactNode }) {
-  
   const httpLink = createHttpLink({
-    uri: "http://localhost:9090/graphql",
+    uri: "https://sentiai.up.railway.app/graphql",
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem("auth_token");
     return {
-        headers: {
-            ...headers,
-            authorization: token ? `Bearer ${token}` : '',
-        }
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      },
     };
   });
 
@@ -24,6 +23,6 @@ export function ApolloWrapper({ children }: { children: React.ReactNode }) {
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
-  
+
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
-} 
+}

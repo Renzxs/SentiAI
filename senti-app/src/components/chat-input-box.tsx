@@ -13,9 +13,9 @@ export default function ChatInputBox(props: {
     const models = createListCollection({
         items: [
           { label: "ChatGPT", value: "chatgpt" },
-          { label: "Gemini", value: "gemini" },
-          { label: "Deepseek", value: "deepseek" },
-          { label: "Grok", value: "grok" },
+          // { label: "Gemini", value: "gemini" },
+          // { label: "Deepseek", value: "deepseek" },
+          // { label: "Grok", value: "grok" },
         ],
     })
       
@@ -31,7 +31,7 @@ export default function ChatInputBox(props: {
             outline="none"
           />
           <HStack justifyContent="space-between">
-            <Select.Root collection={models} defaultValue={["chatgpt"]} value={modelsValue} onValueChange={(value) => setModelsValue(value.value)} size="sm" width="200px" variant="plain">
+            <Select.Root collection={models} defaultValue={["chatgpt"]} value={modelsValue} onValueChange={(value) => setModelsValue(value.value)} size="sm" width="200px">
               <Select.HiddenSelect />
               <Select.Control>
                 <Select.Trigger>
