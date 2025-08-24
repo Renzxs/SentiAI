@@ -2,20 +2,14 @@
 
 import { IconButton } from "@chakra-ui/react";
 import { useState, useCallback, useEffect } from "react";
-import { BiVolume, BiVolumeFull, BiVolumeMute } from "react-icons/bi";
-import { LuVolume2, LuVolumeX } from "react-icons/lu";
+import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 
 interface TextToSpeechProps {
   text: string;
   size?: "sm" | "md" | "lg";
-  variant?: "ghost" | "outline" | "solid";
 }
 
-export default function TextToSpeech({
-  text,
-  size = "sm",
-  variant = "ghost",
-}: TextToSpeechProps) {
+export default function TextToSpeech({ text, size = "sm" }: TextToSpeechProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [speechSynthesis, setSpeechSynthesis] =
     useState<SpeechSynthesis | null>(null);

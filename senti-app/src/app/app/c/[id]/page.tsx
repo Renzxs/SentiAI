@@ -173,11 +173,7 @@ export default function ChatPage() {
                       {moment(message.createdAt).format("lll")}
                     </Text>
                     {message.role === "SYSTEM" && message.content && (
-                      <TextToSpeech
-                        text={message.content}
-                        size="sm"
-                        variant="outline"
-                      />
+                      <TextToSpeech text={message.content} size="sm" />
                     )}
                   </HStack>
                 )}
