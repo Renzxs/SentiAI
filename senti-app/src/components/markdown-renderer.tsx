@@ -3,13 +3,14 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Code } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 import './markdown-styles.css';
 
 interface MarkdownRendererProps {
   content: string;
   fontSize?: string | object;
   lineHeight?: string | object;
-  textAlign?: string;
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
 }
 
 export default function MarkdownRenderer({ 
@@ -24,13 +25,13 @@ export default function MarkdownRenderer({
       style={{
          fontSize: typeof fontSize === 'string' ? fontSize : undefined,
          lineHeight: typeof lineHeight === 'string' ? lineHeight : undefined,
-         textAlign: textAlign as any
+         textAlign: textAlign
        }}
     >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code: ({ node, inline, className, children, ...props }: any) => {
+          code: ({ inline, children, ...props }: { inline?: boolean; children?: ReactNode; [key: string]: any }) => {  
             if (inline) {
               return (
                 <Code
