@@ -1,32 +1,39 @@
-'use client';
+"use client";
 
-import { IconButton } from '@chakra-ui/react';
-import { useState, useCallback } from 'react';
-import { LuVolume2, LuVolumeX } from 'react-icons/lu';
+import { IconButton } from "@chakra-ui/react";
+import { useState, useCallback, useEffect } from "react";
+import { BiVolume, BiVolumeFull, BiVolumeMute } from "react-icons/bi";
+import { LuVolume2, LuVolumeX } from "react-icons/lu";
 
 interface TextToSpeechProps {
   text: string;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'ghost' | 'outline' | 'solid';
+  size?: "sm" | "md" | "lg";
+  variant?: "ghost" | "outline" | "solid";
 }
 
-export default function TextToSpeech({ text, size = 'sm', variant = 'ghost' }: TextToSpeechProps) {
+export default function TextToSpeech({
+  text,
+  size = "sm",
+  variant = "ghost",
+}: TextToSpeechProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [speechSynthesis, setSpeechSynthesis] = useState<SpeechSynthesis | null>(null);
+  const [speechSynthesis, setSpeechSynthesis] =
+    useState<SpeechSynthesis | null>(null);
+  const [isSpeechSupported, setIsSpeechSupported] = useState(false);
 
   // Initialize speech synthesis on component mount
-  const initSpeechSynthesis = useCallback(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      return window.speechSynthesis;
+  useEffect(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      setSpeechSynthesis(window.speechSynthesis);
+      setIsSpeechSupported(true);
     }
-    return null;
   }, []);
 
   const handleSpeak = useCallback(() => {
-    const synth = speechSynthesis || initSpeechSynthesis();
-    
+    const synth = speechSynthesis;
+
     if (!synth) {
-      console.warn('Speech synthesis not supported in this browser');
+      console.warn("Speech synthesis not supported in this browser");
       return;
     }
 
@@ -39,7 +46,7 @@ export default function TextToSpeech({ text, size = 'sm', variant = 'ghost' }: T
 
     // Create new utterance
     const utterance = new SpeechSynthesisUtterance(text);
-    
+
     // Configure speech settings
     utterance.rate = 0.9; // Slightly slower for better comprehension
     utterance.pitch = 1;
@@ -54,18 +61,18 @@ export default function TextToSpeech({ text, size = 'sm', variant = 'ghost' }: T
       setIsPlaying(false);
     };
 
-    utterance.onerror = () => {
+    utterance.onerror = (event) => {
       setIsPlaying(false);
-      console.error('Speech synthesis error');
+      // Only show alert for actual errors, not cancellation
+      if (event.error !== "canceled" && event.error !== "interrupted") {
+        console.warn("Speech synthesis error:", event.error);
+      }
     };
 
     // Start speaking
     synth.speak(utterance);
     setSpeechSynthesis(synth);
-  }, [text, isPlaying, speechSynthesis, initSpeechSynthesis]);
-
-  // Check if speech synthesis is supported
-  const isSpeechSupported = typeof window !== 'undefined' && 'speechSynthesis' in window;
+  }, [text, isPlaying, speechSynthesis]);
 
   if (!isSpeechSupported) {
     return null; // Don't render if not supported
@@ -73,30 +80,19 @@ export default function TextToSpeech({ text, size = 'sm', variant = 'ghost' }: T
 
   return (
     <IconButton
-      aria-label={isPlaying ? 'Stop reading' : 'Read message aloud'}
+      aria-label={isPlaying ? "Stop reading" : "Read message aloud"}
       size={size}
-      variant={variant}
+      variant="ghost"
       onClick={handleSpeak}
-      color={isPlaying ? 'red.500' : 'gray.500'}
-      _hover={{
-        color: isPlaying ? 'red.600' : 'gray.700',
-        bg: isPlaying ? 'red.50' : 'gray.50',
-        transform: 'scale(1.05)',
-        _dark: {
-          color: isPlaying ? 'red.400' : 'gray.400',
-          bg: isPlaying ? 'red.900' : 'gray.800'
-        }
-      }}
-      _active={{
-        transform: 'scale(0.95)'
-      }}
-      transition="all 0.2s ease-in-out"
-      borderRadius="md"
+      color={isPlaying ? "gray.100" : "teal.500"}
+      bg="transparent"
+      _hover={{ bg: "transparent" }}
+      _active={{ bg: "transparent" }}
+      _focus={{ boxShadow: "none" }}
       minW="auto"
-      h="auto"
-      p={1}
+      p={0}
     >
-      {isPlaying ? <LuVolumeX /> : <LuVolume2 />}
+      {isPlaying ? <BiVolumeMute /> : <BiVolumeFull />}
     </IconButton>
   );
 }

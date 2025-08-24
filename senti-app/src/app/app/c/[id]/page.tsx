@@ -64,7 +64,7 @@ export default function ChatPage() {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]);
+  }, [messages, sendMessageLoading]);
 
   if (loading) {
     return (
@@ -143,8 +143,10 @@ export default function ChatPage() {
                   }
                   _dark={{ bg: "gray.900" }}
                 >
-                  <HStack 
-                    justify={message.role === "USER" ? "flex-end" : "flex-start"}
+                  <HStack
+                    justify={
+                      message.role === "USER" ? "flex-end" : "flex-start"
+                    }
                     align="flex-start"
                     gap={{ base: 2, md: 3 }}
                   >
@@ -156,24 +158,28 @@ export default function ChatPage() {
                     >
                       {message.content}
                     </Text>
-                    {message.role === "ASSISTANT" && message.content && (
-                       <TextToSpeech 
-                         text={message.content} 
-                         size="sm" 
-                         variant="ghost" 
-                       />
-                     )}
                   </HStack>
                 </Card.Root>
                 {message.id !== "sending" && (
-                  <Text
-                    fontSize={{ base: "xs", md: "sm" }}
-                    color="gray.500"
-                    textAlign={message.role === "USER" ? "right" : "left"}
+                  <HStack
+                    justify={
+                      message.role === "USER" ? "flex-end" : "flex-start"
+                    }
+                    align="center"
+                    gap={2}
                     px={{ base: 1, md: 2 }}
                   >
-                    {moment(message.createdAt).format("lll")}
-                  </Text>
+                    <Text fontSize={{ base: "xs", md: "sm" }} color="gray.500">
+                      {moment(message.createdAt).format("lll")}
+                    </Text>
+                    {message.role === "SYSTEM" && message.content && (
+                      <TextToSpeech
+                        text={message.content}
+                        size="sm"
+                        variant="outline"
+                      />
+                    )}
+                  </HStack>
                 )}
               </Box>
             </motion.div>
@@ -232,16 +238,16 @@ export default function ChatPage() {
                   width={{ base: 40, md: 50 }}
                   height={{ base: 40, md: 50 }}
                 />
-                <Text 
-                  fontSize={{ base: "xl", md: "2xl", lg: "3xl" }} 
+                <Text
+                  fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
                   textAlign="center"
                   px={{ base: 2, md: 4 }}
                 >
                   What do you want to talk about?
                 </Text>
-                <Text 
-                  fontSize={{ base: "sm", md: "md" }} 
-                  textAlign="center" 
+                <Text
+                  fontSize={{ base: "sm", md: "md" }}
+                  textAlign="center"
                   color="gray.500"
                   px={{ base: 2, md: 4 }}
                 >
