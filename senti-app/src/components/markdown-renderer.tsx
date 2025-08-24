@@ -1,37 +1,46 @@
 "use client";
 
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { Code } from '@chakra-ui/react';
-import { ReactNode } from 'react';
-import './markdown-styles.css';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Code } from "@chakra-ui/react";
+import { ReactNode } from "react";
+import "./markdown-styles.css";
 
 interface MarkdownRendererProps {
   content: string;
   fontSize?: string | object;
   lineHeight?: string | object;
-  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  textAlign?: "left" | "center" | "right" | "justify";
 }
 
-export default function MarkdownRenderer({ 
-  content, 
-  fontSize = { base: "sm", md: "md" }, 
+export default function MarkdownRenderer({
+  content,
+  fontSize = { base: "sm", md: "md" },
   lineHeight = { base: "1.4", md: "1.5" },
-  textAlign = "left"
+  textAlign = "left",
 }: MarkdownRendererProps) {
   return (
     <div
       className="markdown-content"
       style={{
-         fontSize: typeof fontSize === 'string' ? fontSize : undefined,
-         lineHeight: typeof lineHeight === 'string' ? lineHeight : undefined,
-         textAlign: textAlign
-       }}
+        fontSize: typeof fontSize === "string" ? fontSize : undefined,
+        lineHeight: typeof lineHeight === "string" ? lineHeight : undefined,
+        textAlign: textAlign,
+      }}
     >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code: ({ inline, children, ...props }: { inline?: boolean; children?: ReactNode; [key: string]: any }) => {  
+          code: ({
+            inline,
+            children,
+            ...props
+          }: {
+            inline?: boolean;
+            children?: ReactNode;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [key: string]: any;
+          }) => {
             if (inline) {
               return (
                 <Code
@@ -50,11 +59,11 @@ export default function MarkdownRenderer({
             return (
               <div
                 style={{
-                  backgroundColor: '#f3f4f6',
-                  padding: '0.75rem',
-                  borderRadius: '0.375rem',
-                  overflow: 'auto',
-                  marginBottom: '0.5rem'
+                  backgroundColor: "#f3f4f6",
+                  padding: "0.75rem",
+                  borderRadius: "0.375rem",
+                  overflow: "auto",
+                  marginBottom: "0.5rem",
                 }}
               >
                 <Code
@@ -68,7 +77,7 @@ export default function MarkdownRenderer({
                 </Code>
               </div>
             );
-          }
+          },
         }}
       >
         {content}

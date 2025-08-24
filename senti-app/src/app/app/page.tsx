@@ -121,15 +121,16 @@ export default function AppPage() {
           animate="visible"
           transition={{ duration: 0.5 }}
         >
-          <HStack 
-            px={{ base: 3, md: 4 }} 
-            py={{ base: 2, md: 3 }} 
-            bg="gray.800" 
-            borderRadius="full" 
+          <HStack
+            px={{ base: 4, md: 6 }}
+            py={{ base: 1, md: 2 }}
+            backdropFilter="blur(16px)"
+            bg="rgba(26, 32, 44, 0.75)"
+            borderRadius="full"
             gap={{ base: 2, md: 4 }}
           >
-            <Text 
-              fontWeight="medium" 
+            <Text
+              fontWeight="medium"
               color="white"
               fontSize={{ base: "sm", md: "md" }}
             >
@@ -138,12 +139,16 @@ export default function AppPage() {
           </HStack>
         </motion.div>
 
-        <HStack gap={{ base: 3, md: 4 }} flexWrap="wrap" justifyContent="center">
-          <Image 
-            src={SentiLogo.src} 
-            alt="SentiAI" 
-            width={{ base: 40, md: 50 }} 
-            height={{ base: 40, md: 50 }} 
+        <HStack
+          gap={{ base: 3, md: 4 }}
+          flexWrap="wrap"
+          justifyContent="center"
+        >
+          <Image
+            src={SentiLogo.src}
+            alt="SentiAI"
+            width={{ base: 40, md: 50 }}
+            height={{ base: 40, md: 50 }}
           />
           <motion.div
             variants={messageVariants}
@@ -151,8 +156,8 @@ export default function AppPage() {
             animate="visible"
             transition={{ duration: 0.5 }}
           >
-            <Text 
-              fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }} 
+            <Text
+              fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
               fontWeight="medium"
               textAlign={{ base: "center", md: "left" }}
             >
@@ -176,8 +181,8 @@ export default function AppPage() {
           w="100%"
           mt={{ base: 4, md: 6 }}
         >
-          <Text 
-            fontSize={{ base: "xs", md: "sm" }} 
+          <Text
+            fontSize={{ base: "xs", md: "sm" }}
             color="gray.500"
             textAlign="center"
           >
