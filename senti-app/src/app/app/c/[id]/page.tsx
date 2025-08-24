@@ -2,6 +2,7 @@
 
 import ChatInputBox from "@/components/chat-input-box";
 import TextToSpeech from "@/components/text-to-speech";
+import MarkdownRenderer from "@/components/markdown-renderer";
 import { CreateMessageDocument, GetMessagesDocument } from "@/gql/graphql";
 import {
   Box,
@@ -150,14 +151,23 @@ export default function ChatPage() {
                     align="flex-start"
                     gap={{ base: 2, md: 3 }}
                   >
-                    <Text
-                      fontSize={{ base: "sm", md: "md" }}
-                      textAlign={message.role === "USER" ? "right" : "left"}
-                      lineHeight={{ base: "1.4", md: "1.5" }}
-                      flex={1}
-                    >
-                      {message.content}
-                    </Text>
+                    {message.role === "SYSTEM" ? (
+                      <MarkdownRenderer
+                        content={message.content || ""}
+                        fontSize={{ base: "sm", md: "md" }}
+                        lineHeight={{ base: "1.4", md: "1.5" }}
+                        textAlign="left"
+                      />
+                    ) : (
+                      <Text
+                        fontSize={{ base: "sm", md: "md" }}
+                        textAlign={message.role === "USER" ? "right" : "left"}
+                        lineHeight={{ base: "1.4", md: "1.5" }}
+                        flex={1}
+                      >
+                        {message.content}
+                      </Text>
+                    )}
                   </HStack>
                 </Card.Root>
                 {message.id !== "sending" && (
