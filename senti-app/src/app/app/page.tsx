@@ -86,6 +86,7 @@ export default function AppPage() {
         display="flex"
         alignItems="center"
         justifyContent="center"
+        px={{ base: 4, md: 8 }}
       >
         <Spinner color="green.300" />
       </Container>
@@ -100,15 +101,19 @@ export default function AppPage() {
       justifyContent="center"
       alignItems="center"
       bg={{ base: "white", _dark: "black" }}
+      px={{ base: 4, md: 8 }}
+      py={{ base: 6, md: 8 }}
     >
       <Box
         w="100%"
+        maxW={{ base: "100%", md: "600px", lg: "800px" }}
         h="100%"
         display="flex"
         flexDirection="column"
-        gap={4}
+        gap={{ base: 6, md: 8 }}
         justifyContent="center"
         alignItems="center"
+        px={{ base: 2, md: 4 }}
       >
         <motion.div
           variants={containerVariants}
@@ -116,22 +121,41 @@ export default function AppPage() {
           animate="visible"
           transition={{ duration: 0.5 }}
         >
-          <HStack px={4} py={2} bg="gray.800" borderRadius="full" gap={4}>
-            <Text fontWeight="medium" color="white">
+          <HStack 
+            px={{ base: 3, md: 4 }} 
+            py={{ base: 2, md: 3 }} 
+            bg="gray.800" 
+            borderRadius="full" 
+            gap={{ base: 2, md: 4 }}
+          >
+            <Text 
+              fontWeight="medium" 
+              color="white"
+              fontSize={{ base: "sm", md: "md" }}
+            >
               Grab a coffee and talk to Senti
             </Text>
           </HStack>
         </motion.div>
 
-        <HStack gap={4}>
-          <Image src={SentiLogo.src} alt="SentiAI" width={50} height={50} />
+        <HStack gap={{ base: 3, md: 4 }} flexWrap="wrap" justifyContent="center">
+          <Image 
+            src={SentiLogo.src} 
+            alt="SentiAI" 
+            width={{ base: 40, md: 50 }} 
+            height={{ base: 40, md: 50 }} 
+          />
           <motion.div
             variants={messageVariants}
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.5 }}
           >
-            <Text fontSize="4xl" fontWeight="medium">
+            <Text 
+              fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }} 
+              fontWeight="medium"
+              textAlign={{ base: "center", md: "left" }}
+            >
               Hello, {user?.name}
             </Text>
           </motion.div>
@@ -150,8 +174,13 @@ export default function AppPage() {
           justifyContent="center"
           alignItems="center"
           w="100%"
+          mt={{ base: 4, md: 6 }}
         >
-          <Text fontSize="xs" color="gray.500">
+          <Text 
+            fontSize={{ base: "xs", md: "sm" }} 
+            color="gray.500"
+            textAlign="center"
+          >
             Developed by DevChiefs 2025
           </Text>
         </Box>

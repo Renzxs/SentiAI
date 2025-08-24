@@ -35,11 +35,11 @@ export default function Home() {
         <VStack gap={2} mb={4}>
           <HStack justifyContent="center" alignItems="center" gap={2}>
             <Image src={SentiLogo.src} alt="SentiAI" width={30} height={30} />
-            <Text fontSize="2xl" fontWeight="bold">
+            <Text fontSize="2xl" fontWeight="bold" color="white">
               SentiAI
             </Text>
           </HStack>
-          <Text fontSize="sm">
+          <Text fontSize="sm" color="white">
             Talk to Senti, Feel a Little Lighter. Your emotional health
             companion AI agent.
           </Text>

@@ -73,6 +73,7 @@ export default function ChatPage() {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        px={{ base: 4, md: 8 }}
       >
         <Spinner />
       </Container>
@@ -99,21 +100,22 @@ export default function ChatPage() {
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      p={10}
+      p={{ base: 4, md: 6, lg: 10 }}
       bg={{ base: "white", _dark: "black" }}
+      maxW="full"
     >
       <Box
         flex={1}
         w="100%"
-        maxW="1000px"
+        maxW={{ base: "100%", md: "800px", lg: "1000px" }}
         h="100%"
         borderRadius="md"
-        p={4}
+        p={{ base: 2, md: 4 }}
         overflowY="auto"
-        pt={10}
+        pt={{ base: 6, md: 8, lg: 10 }}
         display="flex"
         flexDirection="column"
-        gap={5}
+        gap={{ base: 3, md: 4, lg: 5 }}
       >
         <AnimatePresence initial={false}>
           {displayedMessages.map((message) => (
@@ -126,8 +128,8 @@ export default function ChatPage() {
             >
               <Box display="flex" flexDirection="column" gap={1}>
                 <Card.Root
-                  maxW="90%"
-                  p={2}
+                  maxW={{ base: "95%", md: "85%", lg: "90%" }}
+                  p={{ base: 3, md: 4 }}
                   borderRadius="md"
                   variant={"subtle"}
                   style={{
@@ -141,17 +143,19 @@ export default function ChatPage() {
                   _dark={{ bg: "gray.900" }}
                 >
                   <Text
-                    fontSize="sm"
+                    fontSize={{ base: "sm", md: "md" }}
                     textAlign={message.role === "USER" ? "right" : "left"}
+                    lineHeight={{ base: "1.4", md: "1.5" }}
                   >
                     {message.content}
                   </Text>
                 </Card.Root>
                 {message.id !== "sending" && (
                   <Text
-                    fontSize="smaller"
+                    fontSize={{ base: "xs", md: "sm" }}
                     color="gray.500"
                     textAlign={message.role === "USER" ? "right" : "left"}
+                    px={{ base: 1, md: 2 }}
                   >
                     {moment(message.createdAt).format("lll")}
                   </Text>
@@ -169,17 +173,17 @@ export default function ChatPage() {
               transition={{ duration: 0.3 }}
             >
               <Card.Root
-                maxW="90%"
-                p={2}
+                maxW={{ base: "95%", md: "85%", lg: "90%" }}
+                p={{ base: 3, md: 4 }}
                 borderRadius="md"
                 variant={"subtle"}
                 w="fit-content"
                 alignSelf={"flex-start"}
                 _dark={{ bg: "gray.900" }}
               >
-                <HStack gap={2}>
+                <HStack gap={{ base: 2, md: 3 }}>
                   <Spinner size="sm" color="green.300" />
-                  <Text fontSize="sm" color="gray.500">
+                  <Text fontSize={{ base: "sm", md: "md" }} color="gray.500">
                     Senti is thinking...
                   </Text>
                 </HStack>
@@ -198,25 +202,34 @@ export default function ChatPage() {
               transition={{ duration: 0.4 }}
             >
               <Box
-                p={2}
+                p={{ base: 4, md: 6 }}
                 w="100%"
                 h="100%"
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-                gap={2}
+                gap={{ base: 3, md: 4 }}
               >
                 <Image
                   src={SentiLogo.src}
                   alt="SentiAI"
-                  width={50}
-                  height={50}
+                  width={{ base: 40, md: 50 }}
+                  height={{ base: 40, md: 50 }}
                 />
-                <Text fontSize="3xl" textAlign="center">
+                <Text 
+                  fontSize={{ base: "xl", md: "2xl", lg: "3xl" }} 
+                  textAlign="center"
+                  px={{ base: 2, md: 4 }}
+                >
                   What do you want to talk about?
                 </Text>
-                <Text fontSize="md" textAlign="center" color="gray.500">
+                <Text 
+                  fontSize={{ base: "sm", md: "md" }} 
+                  textAlign="center" 
+                  color="gray.500"
+                  px={{ base: 2, md: 4 }}
+                >
                   Send a message to get started
                 </Text>
               </Box>
