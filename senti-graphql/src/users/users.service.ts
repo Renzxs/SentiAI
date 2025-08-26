@@ -64,6 +64,10 @@ export class UsersService {
         }),
       );
 
+      if (!userResponse.data || !emailReponse.data) {
+        return { url: `https://senti-app-teal.vercel.app/` };
+      }
+
       const githubUser = userResponse.data;
       let user = await this.findByEmail(emailReponse.data[0].email);
       if (!user) {
