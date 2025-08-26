@@ -115,7 +115,9 @@ export class UsersService {
         url: `https://senti-app-teal.vercel.app/auth?token=${accessToken}`,
       };
     } catch (error) {
-      throw new Error(error.message);
+      return {
+        url: `https://senti-app-teal.vercel.app?error=${encodeURIComponent('Please make sure you have a GitHub username & avatar')}`,
+      };
     }
   }
 

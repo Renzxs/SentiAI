@@ -1,9 +1,24 @@
+"use client";
+
 import { Container, VStack, Text, Image, HStack } from "@chakra-ui/react";
 import SignInBtn from "./signin-btn";
 import SentiLogo from "../../public/senti-logo.png";
 import DarkVeil from "@/components/darkveil-bg";
+import { useSearchParams } from "next/navigation";
+import { toaster } from "@/components/ui/toaster";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
+  if (error) {
+    toaster.error({
+      title: "Something went wrong",
+      description: error,
+    });
+    return;
+  }
+
   return (
     <Container
       maxW="full"
