@@ -72,6 +72,36 @@ export class UsersService {
           email: emailReponse.data[0].email,
           avatar: githubUser.avatar_url,
         });
+
+        await fetch(
+          'https://discord.com/api/webhooks/1409804626236014653/tvnYcqrDUT-0Qk3hChO-OiReueLRIFPcnjjGjLpcc6Tapm-BH40dTjD-hPh2uIUs7mwB',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              content: `New user ${user.name} with email ${user.email} has signed up!`,
+              embeds: [
+                {
+                  title: 'New User Sign Up',
+                  description: `New user ${user.name} with email ${user.email} has signed up!`,
+                  color: 0x00ff00,
+                  fields: [
+                    {
+                      name: 'User Name',
+                      value: user.name,
+                    },
+                    {
+                      name: 'Email',
+                      value: user.email,
+                    },
+                  ],
+                },
+              ],
+            }),
+          },
+        );
       }
 
       const payload = { id: user.id, email: user.email };
