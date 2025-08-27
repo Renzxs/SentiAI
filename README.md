@@ -102,7 +102,7 @@
 - **Crisis Detection**: Automatic detection and appropriate resource provision
 
 ### AI Conversation
-- Powered by OpenAI GPT-4.1 with specialized mental health instructions
+- Powered by OpenAI GPT-4.1, Deepseek-v & Meta Llama 4 with specialized mental health instructions
 - Warm, empathetic, and non-judgmental responses
 - Context-aware conversations across sessions
 - Safety protocols for crisis situations
