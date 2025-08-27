@@ -20,9 +20,8 @@ export default function ChatInputBox(props: {
   const models = createListCollection({
     items: [
       { label: "ChatGPT", value: "chatgpt" },
-      // { label: "Gemini", value: "gemini" },
-      // { label: "Deepseek", value: "deepseek" },
-      // { label: "Grok", value: "grok" },
+      { label: "Llama Meta", value: "llama" },
+      { label: "Deepseek", value: "deepseek" },
     ],
   });
 
