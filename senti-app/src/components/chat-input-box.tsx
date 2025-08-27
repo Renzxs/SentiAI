@@ -19,9 +19,9 @@ export default function ChatInputBox(props: {
   const { message, setMessage, modelsValue, setModelsValue, onSend } = props;
   const models = createListCollection({
     items: [
-      { label: "ChatGPT", value: "chatgpt" },
-      { label: "Llama Meta", value: "llama" },
-      { label: "Deepseek", value: "deepseek" },
+      { label: "ChatGPT (gpt-4.1)", value: "chatgpt" },
+      { label: "Llama (meta-llama-4)", value: "llama" },
+      { label: "Deepseek (deepseek-v3)", value: "deepseek" },
     ],
   });
 
