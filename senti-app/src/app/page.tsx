@@ -182,20 +182,32 @@ export default function Home() {
                 </Text>
               </HStack>
             </div>
-            <Text fontSize="4xl" fontWeight="bold" color="white">
+            <Text
+              fontSize="4xl"
+              fontWeight="bold"
+              color="white"
+              sm={{ fontSize: "3xl" }}
+            >
               Talk to Senti, Feel a Little Lighter. Your emotional health
               companion AI agent.
             </Text>
           </VStack>
 
-          <HStack gap={4} justifyContent="center" alignItems="center">
+          <HStack
+            gap={4}
+            justifyContent="center"
+            alignItems="center"
+            sm={{ flexDirection: "column-reverse", alignItems: "center" }}
+          >
             <Button
               onClick={() =>
                 (window.location.href = "https://discord.gg/ZXcnWz55zg")
               }
               colorScheme="teal"
               variant="outline"
+              color="white"
               borderRadius="full"
+              borderColor="white"
             >
               <TbBrandDiscord />
               Join our server
