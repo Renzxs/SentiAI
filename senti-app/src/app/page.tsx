@@ -183,10 +183,9 @@ export default function Home() {
               </HStack>
             </div>
             <Text
-              fontSize="4xl"
+              fontSize={{ base: "2xl", lg: "4xl" }}
               fontWeight="bold"
               color="white"
-              sm={{ fontSize: "3xl" }}
             >
               Talk to Senti, Feel a Little Lighter. Your emotional health
               companion AI agent.
@@ -196,8 +195,8 @@ export default function Home() {
           <HStack
             gap={4}
             justifyContent="center"
+            flexDirection={{ base: "column", md: "row" }}
             alignItems="center"
-            sm={{ flexDirection: "column-reverse", alignItems: "center" }}
           >
             <Button
               onClick={() =>
